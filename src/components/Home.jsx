@@ -1,4 +1,5 @@
 import React from "react";
+import BookList from "./BookList";
 
 function Home() {
   const categories = [
@@ -31,6 +32,7 @@ function Home() {
           </div>
         ))}
       </div>
+      <BookList />
     </div>
   );
 }
