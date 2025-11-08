@@ -20,7 +20,7 @@ const Navbar = () => {
         <Link to="/" className="hover:text-gray-200 transition">
           Home
         </Link>
-        <Link to="/browse" className="hover:text-gray-200 transition">
+        <Link to="/browse-books" className="hover:text-gray-200 transition">
           Browse Books
         </Link>
         <Link to="/add" className="hover:text-gray-200 transition">
@@ -47,7 +47,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/browse"
+            to="/browse-books"
             className="hover:text-gray-200 transition"
             onClick={() => setIsOpen(false)}
           >

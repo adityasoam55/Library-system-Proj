@@ -15,7 +15,7 @@ function BookDetails() {
   }
 
   return (
-    <div className="px-6 py-10 mt-16 flex flex-col md:flex-row items-center md:items-start gap-10">
+    <div className="px-6 py-10 mt-10 flex flex-col md:flex-row items-center md:items-start gap-10">
       {/* Book Image */}
       <img
         src={book.image}
