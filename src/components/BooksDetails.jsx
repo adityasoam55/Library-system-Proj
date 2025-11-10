@@ -19,7 +19,7 @@ const BookDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-16 px-6 animate-fadeIn">
+    <div className="min-h-screen bg-linear-to-b from-blue-50 to-white py-16 px-6 animate-fadeIn">
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         {/* Header / Back Button */}
         <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-blue-600 text-white">
@@ -35,7 +35,7 @@ const BookDetails = () => {
         {/* Content */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-10 p-8">
           {/* Book Image */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <img
               src={book.image}
               alt={book.title}
@@ -62,7 +62,7 @@ const BookDetails = () => {
             </p>
 
             <p className="text-gray-600 leading-relaxed">
-              {book.description || "No description available."}
+              {book.short_description || "No description available."}
             </p>
 
             <p className="text-gray-800 font-semibold">
