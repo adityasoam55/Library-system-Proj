@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBook } from "../redux/booksSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  BookOpen,
+  Image,
+  Star,
+  Calendar,
+  User,
+  FileText,
+  Hash,
+  Tag,
+} from "lucide-react";
 
 const AddBook = () => {
   const dispatch = useDispatch();
@@ -14,7 +24,7 @@ const AddBook = () => {
     published: "",
     description: "",
     rating: "",
-    copiesSold: "",
+    copies_sold: "",
     image: "",
   });
 
@@ -24,7 +34,6 @@ const AddBook = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Form validation
   const validate = () => {
     const newErrors = {};
     Object.keys(formData).forEach((field) => {
@@ -32,8 +41,8 @@ const AddBook = () => {
     });
     if (formData.rating && (formData.rating < 1 || formData.rating > 5))
       newErrors.rating = "Rating must be between 1 and 5";
-    if (formData.copiesSold && formData.copiesSold < 0)
-      newErrors.copiesSold = "Copies sold cannot be negative";
+    if (formData.copies_sold && formData.copies_sold < 0)
+      newErrors.copies_sold = "Copies sold cannot be negative";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -42,63 +51,77 @@ const AddBook = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    const newBook = {
-      id: Date.now(),
-      ...formData,
-    };
-
-    dispatch(addBook(newBook)); // add to redux
-    navigate("/browse-books"); // redirect
+    const newBook = { id: Date.now(), ...formData };
+    dispatch(addBook(newBook));
+    navigate("/browse-books");
   };
 
+  const inputFields = [
+    { name: "title", label: "Title", icon: BookOpen },
+    { name: "author", label: "Author", icon: User },
+    { name: "category", label: "Category", icon: Tag },
+    { name: "published", label: "Published Date", icon: Calendar },
+    { name: "description", label: "Short Description", icon: FileText },
+    { name: "rating", label: "Rating (1–5)", icon: Star },
+    { name: "copies_sold", label: "Copies Sold", icon: Hash },
+    { name: "image", label: "Image URL", icon: Image },
+  ];
+
   return (
-    <div className="px-6 py-10 mt-16 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-        Add a New Book
-      </h1>
+    <div className="flex justify-center items-center py-16 min-h-screen animate-fadeIn">
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl border border-gray-100">
+        <h1 className="text-3xl font-bold text-blue-700 text-center mb-8">
+          Add a New Book
+        </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-6 border border-gray-200"
-      >
-        {[
-          { name: "title", label: "Title" },
-          { name: "author", label: "Author" },
-          { name: "category", label: "Category" },
-          { name: "published", label: "Published Date" },
-          { name: "description", label: "Short Description" },
-          { name: "rating", label: "Rating (1–5)" },
-          { name: "copiesSold", label: "Copies Sold" },
-          { name: "image", label: "Image URL" },
-        ].map(({ name, label }) => (
-          <div key={name} className="mb-4">
-            <label
-              htmlFor={name}
-              className="block text-gray-700 font-medium mb-1"
-            >
-              {label}
-            </label>
-            <input
-              type="text"
-              id={name}
-              name={name}
-              value={formData[name]}
-              onChange={handleChange}
-              className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            {errors[name] && (
-              <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
-            )}
-          </div>
-        ))}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {inputFields.map(({ name, label, icon: Icon }) => (
+            <div key={name} className="flex flex-col">
+              <label htmlFor={name} className="text-gray-700 font-medium mb-1">
+                {label}
+              </label>
+              <div className="relative">
+                <Icon className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  id={name}
+                  name={name}
+                  value={formData[name]}
+                  onChange={handleChange}
+                  className={`w-full border ${
+                    errors[name] ? "border-red-400" : "border-gray-300"
+                  } pl-10 pr-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition`}
+                />
+              </div>
+              {errors[name] && (
+                <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+              )}
+            </div>
+          ))}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg mt-4 transition"
-        >
-          Add Book
-        </button>
-      </form>
+          {/* Image Preview */}
+          {formData.image && (
+            <div className="mt-4 text-center">
+              <p className="text-gray-600 mb-2 text-sm font-medium">
+                Image Preview
+              </p>
+              <img
+                src={formData.image}
+                alt="Book Preview"
+                className="w-40 h-56 object-cover rounded-lg shadow-md mx-auto border"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md mt-6 transition-all"
+          >
+            Add Book
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

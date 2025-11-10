@@ -1,31 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // ✅ icon library (lucide-react)
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, BookOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const links = [
+    { path: "/", label: "Home" },
+    { path: "/browse-books", label: "Browse Books" },
+    { path: "/add", label: "Add Book" },
+  ];
 
   return (
-    <nav className="bg-blue-600 text-white px-6 py-3 flex justify-between items-center shadow-md fixed w-full top-0 z-10 shadow-blue-300">
-      {/* Left spacer for centering title */}
-      <div className="w-6 sm:hidden" />
+    <nav className="bg-linear-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 flex justify-between items-center fixed w-full top-0 z-20 shadow-lg">
+      {/* Brand Logo & Name */}
+      <Link to="/" className="flex items-center gap-2 font-bold text-xl">
+        <BookOpen className="w-6 h-6 text-white" />
+        <span>People's Library</span>
+      </Link>
 
-      {/* Centered Title */}
-      <h1 className="text-xl font-semibold max-md:text-center flex-1">
-        People's Library
-      </h1>
-
-      {/* Desktop Links */}
+      {/* Desktop Navigation */}
       <div className="hidden sm:flex space-x-6">
-        <Link to="/" className="hover:text-gray-200 transition">
-          Home
-        </Link>
-        <Link to="/browse-books" className="hover:text-gray-200 transition">
-          Browse Books
-        </Link>
-        <Link to="/add" className="hover:text-gray-200 transition">
-          Add Book
-        </Link>
+        {links.map(({ path, label }) => (
+          <Link
+            key={path}
+            to={path}
+            className={`transition-all duration-200 ${
+              location.pathname === path
+                ? "text-yellow-300 font-semibold border-b-2 border-yellow-300 pb-1"
+                : "hover:text-yellow-200"
+            }`}
+          >
+            {label}
+          </Link>
+        ))}
       </div>
 
       {/* Mobile Menu Button */}
@@ -33,35 +43,36 @@ const Navbar = () => {
         className="sm:hidden text-white focus:outline-none cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? <X size={26} /> : <Menu size={26} />}
       </button>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-blue-600 flex flex-col items-center py-4 space-y-3 sm:hidden shadow-md">
-          <Link
-            to="/"
-            className="hover:text-gray-200 transition"
-            onClick={() => setIsOpen(false)}
+      {/* Animated Mobile Dropdown */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 w-full bg-linear-to-r from-blue-600 to-indigo-600 flex flex-col items-center py-5 space-y-3 sm:hidden shadow-md"
           >
-            Home
-          </Link>
-          <Link
-            to="/browse-books"
-            className="hover:text-gray-200 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Browse Books
-          </Link>
-          <Link
-            to="/add"
-            className="hover:text-gray-200 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Add Book
-          </Link>
-        </div>
-      )}
+            {links.map(({ path, label }) => (
+              <Link
+                key={path}
+                to={path}
+                onClick={() => setIsOpen(false)}
+                className={`text-lg ${
+                  location.pathname === path
+                    ? "text-yellow-300 font-semibold"
+                    : "hover:text-yellow-200"
+                } transition-all duration-200`}
+              >
+                {label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
