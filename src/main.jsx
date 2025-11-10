@@ -23,6 +23,10 @@ const router = createBrowserRouter([
         path: "/browse-books",
         element: <BrowseBooks />,
       },
+      {
+        path: "/books/:category",
+        element: <BrowseBooks />,
+      },
     ],
   },
 ]);

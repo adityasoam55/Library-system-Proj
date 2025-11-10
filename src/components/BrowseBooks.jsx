@@ -1,11 +1,23 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { booksData } from "../utils";
 import BookCard from "../components/BookCard";
 
 const BrowseBooks = () => {
+  const { category } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredBooks = booksData.filter((book) => {
+  // Filter by category if present
+  let filteredBooks = booksData;
+
+  if (category) {
+    filteredBooks = filteredBooks.filter(
+      (book) => book.category.toLowerCase() === category.toLowerCase()
+    );
+  }
+
+  // Further filter by search
+  filteredBooks = filteredBooks.filter((book) => {
     const query = searchQuery.toLowerCase();
     return (
       book.title.toLowerCase().includes(query) ||
@@ -14,13 +26,15 @@ const BrowseBooks = () => {
   });
 
   return (
-    <div className="px-6 py-10 mt-4">
+    <div className="px-6 py-10">
       <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-        Browse All Books
+        {category ? `${category} Books` : "Browse All Books"}
       </h1>
 
-      <p className="text-gray-600 text-center mb-10">
-        Discover new titles, explore genres, and find your next favorite read.
+      <p className="text-gray-600 text-center mb-8">
+        {category
+          ? `Explore the best ${category} titles in our library.`
+          : "Discover new titles, explore genres, and find your next favorite read."}
       </p>
 
       {/* Search Bar */}
@@ -35,11 +49,17 @@ const BrowseBooks = () => {
       </div>
 
       {/* Books Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))}
-      </div>
+      {filteredBooks.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 text-lg">
+          No books found matching your search.
+        </p>
+      )}
     </div>
   );
 };

@@ -28,7 +28,9 @@ function BookCard({ book }) {
         </p>
       </div>
       <Link to={`/booksdetails/${book.id}`}>
-        <span className="text-indigo-400 hover:underline">view details</span>
+        <span className="text-indigo-400 hover:underline ml-4">
+          view details
+        </span>
       </Link>
     </div>
   );
