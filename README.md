@@ -1,16 +1,71 @@
-# React + Vite
+# 📚 People's Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive **Library Management Web App** built with **React.js**, **Redux Toolkit**, and **Tailwind CSS**.  
+Users can browse books by category, view details, and even add new books dynamically with a clean, intuitive UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- 📖 **Browse Books** — Explore all available books or filter by category.
+- 🔍 **Search Functionality** — Quickly find books by title or author.
+- ➕ **Add New Books** — Add books with title, author, category, image, rating, and more.
+- 🏷️ **Category Selector** — Select book categories from a dropdown.
+- 💾 **Redux State Management** — Books are managed via Redux Toolkit.
+- 🖼️ **Book Details Page** — View complete information for each book.
+- 🧭 **404 Page** — Custom “Page Not Found” route with navigation back to Home.
+- 💅 **Fully Responsive UI** — Optimized for mobile, tablet, and desktop screens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧩 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Technology             | Purpose                    |
+| ---------------------- | -------------------------- |
+| **React.js**           | Frontend framework         |
+| **Redux Toolkit**      | Global state management    |
+| **React Router DOM**   | Page routing               |
+| **Tailwind CSS**       | Styling and layout         |
+| **Lucide React Icons** | Modern icons for UI        |
+| **Vite**               | Development and build tool |
+
+---
+
+## 🗂️ Folder Structure
+
+src/
+├── components/
+│ ├── AddBook.jsx
+│ ├── BookCard.jsx
+│ ├── BookList.jsx
+│ ├── BooksDetails.jsx
+│ ├── BrowseBooks.jsx
+│ ├── Footer.jsx
+│ ├── Home.jsx
+│ ├── Layout.jsx
+│ ├── Navbar.jsx
+│ ├── NotFound.jsx
+├── redux/
+│ ├── booksSlice.js
+│ ├── store.js
+├── App.jsx
+├── main.jsx
+├── index.css
+├── utils.js
+
+---
+
+## ⚙️ Installation & Setup
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/adityasoam55/Library-system-Proj
+   cd Library-system-Proj
+   ```
+
+👨‍💻 Author
+
+Aditya Som
+Frontend Developer
+📞 8384899626
+📧 adityasoam55@gmail.com
