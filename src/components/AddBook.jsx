@@ -59,12 +59,22 @@ const AddBook = () => {
   const inputFields = [
     { name: "title", label: "Title", icon: BookOpen },
     { name: "author", label: "Author", icon: User },
-    { name: "category", label: "Category", icon: Tag },
-    { name: "published", label: "Published Date", icon: Calendar },
+    { name: "published", label: "Published Year", icon: Calendar },
     { name: "description", label: "Short Description", icon: FileText },
     { name: "rating", label: "Rating (1–5)", icon: Star },
     { name: "copies_sold", label: "Copies Sold", icon: Hash },
     { name: "image", label: "Image URL", icon: Image },
+  ];
+
+  const categories = [
+    "Fiction",
+    "Thriller",
+    "Sci-Fi",
+    "Mystery",
+    "Romance",
+    "History",
+    "Fantasy",
+    "Adventure",
   ];
 
   return (
@@ -75,6 +85,39 @@ const AddBook = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Category Dropdown */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="category"
+              className="text-gray-700 font-medium mb-1"
+            >
+              Category
+            </label>
+            <div className="relative">
+              <Tag className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className={`w-full border ${
+                  errors.category ? "border-red-400" : "border-gray-300"
+                } pl-10 pr-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition bg-white`}
+              >
+                <option value="">Select a category</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">{errors.category}</p>
+            )}
+          </div>
+
+          {/* Other Input Fields */}
           {inputFields.map(({ name, label, icon: Icon }) => (
             <div key={name} className="flex flex-col">
               <label htmlFor={name} className="text-gray-700 font-medium mb-1">
