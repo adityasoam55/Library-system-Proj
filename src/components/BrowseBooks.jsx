@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { booksData } from "../utils";
+// import { booksData } from "../utils";
 import BookCard from "../components/BookCard";
+import { useSelector } from "react-redux";
 
 const BrowseBooks = () => {
   const { category } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const books = useSelector((state) => state.books.list);
 
   // Filter by category if present
-  let filteredBooks = booksData;
-
+  let filteredBooks = books;
   if (category) {
     filteredBooks = filteredBooks.filter(
       (book) => book.category.toLowerCase() === category.toLowerCase()

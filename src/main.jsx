@@ -6,6 +6,9 @@ import BooksDetails from "./components/BooksDetails.jsx";
 import Layout from "./components/Layout.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import BrowseBooks from "./components/BrowseBooks.jsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import AddBook from "./components/AddBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,12 +30,18 @@ const router = createBrowserRouter([
         path: "/books/:category",
         element: <BrowseBooks />,
       },
+      {
+        path: "/add",
+        element: <AddBook />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { booksData } from "../utils"; // adjust path if needed
+import { useSelector } from "react-redux";
 
 function BookDetails() {
   const { id } = useParams();
-  const book = booksData.find((b) => b.id === Number(id));
+  const books = useSelector((state) => state.books.list); // ✅ from Redux store
+  const book = books.find((b) => b.id === Number(id));
 
   if (!book) {
     return (
@@ -22,7 +23,7 @@ function BookDetails() {
       >
         Back to Browse
       </Link>
-      <div className="px-6 py-10 flex flex-col md:flex-row items-center md:items-start gap-10">
+      <div className="px-6 py-10 flex flex-col md:flex-row items-center md:items-start gap-10 mt-10">
         {/* Book Image */}
         <img
           src={book.image}
@@ -49,12 +50,12 @@ function BookDetails() {
           </p>
 
           <p className="text-gray-600 mb-4 leading-relaxed">
-            {book.short_description}
+            {book.description || "No description available."}
           </p>
 
           <p className="text-gray-800 font-semibold">
             Copies Sold:{" "}
-            <span className="text-blue-600">{book.copies_sold}</span>
+            <span className="text-blue-600">{book.copiesSold}</span>
           </p>
         </div>
       </div>
